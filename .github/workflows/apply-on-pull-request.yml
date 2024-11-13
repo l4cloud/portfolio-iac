@@ -1,9 +1,12 @@
 name: Terraform Plan 
 run-name: ${{ github.actor }} is running a terraform plan 
 on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
   pull_request:
-    branches:
-      - main
+    branches: [main]
 jobs:
   plan:
     name: terraform plan
