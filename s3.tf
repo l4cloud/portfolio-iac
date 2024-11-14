@@ -34,11 +34,13 @@ resource "aws_s3_bucket_acl" "example" {
   acl    = "public-read"
 }
 
-resource "aws_s3_account_public_access_block" "s3_access_block" {
+resource "aws_s3_bucket_public_access_block" "s3_access_block" {
   block_public_acls       = false
   block_public_policy     = false
   ignore_public_acls      = false
   restrict_public_buckets = false
+
+  bucket = aws_s3_bucket.portfolio.id
 }
 
 resource "aws_s3_bucket_policy" "portfolio_policy" {
