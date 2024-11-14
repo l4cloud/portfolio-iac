@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "allow_get_object" {
       "s3:GetObject",
     ]
     resources = [
-      aws_s3_bucket.portfolio.arn,
+      "${aws_s3_bucket.portfolio.arn}/*",
     ]
     principals {
       type        = "AWS"
