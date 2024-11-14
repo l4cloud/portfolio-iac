@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "portfolio" {
-  bucket = "l4-portfolio-bucket"
+  bucket        = "l4-portfolio-bucket"
   force_destroy = true
 
   tags = {
@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "portfolio" {
 }
 
 resource "aws_s3_bucket_website_configuration" "portfolio_website" {
-  bucket = aws_s3_bucket.l4-portfolio-bucket.id
+  bucket = aws_s3_bucket.portfolio.id
 
   index_document {
     suffix = "index.html"
