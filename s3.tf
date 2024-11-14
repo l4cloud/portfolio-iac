@@ -20,9 +20,25 @@ resource "aws_s3_bucket_website_configuration" "portfolio_website" {
   }
 }
 
+resource "aws_s3_bucket_ownership_controls" "portfolio" {
+  bucket = aws_s3_bucket.portfolio.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "example" {
+  depends_on = [aws_s3_bucket_ownership_controls.portfolio]
+
+  bucket = aws_s3_bucket.portfolio.id
+  acl    = "public-read"
+}
+
 resource "aws_s3_account_public_access_block" "s3_access_block" {
-  block_public_acls   = false
-  block_public_policy = false
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 }
 
 resource "aws_s3_bucket_policy" "portfolio_policy" {
