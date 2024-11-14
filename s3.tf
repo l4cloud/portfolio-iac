@@ -28,6 +28,10 @@ resource "aws_s3_account_public_access_block" "s3_access_block" {
 resource "aws_s3_bucket_policy" "portfolio_policy" {
   bucket = aws_s3_bucket.portfolio.id
   policy = data.aws_iam_policy_document.allow_get_object.json
+
+  depends_on = [
+    aws_s3_account_public_access_block.s3_access_block,
+  ]
 }
 
 data "aws_iam_policy_document" "allow_get_object" {
