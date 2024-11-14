@@ -2,7 +2,8 @@ name: Terraform Apply
 run-name: ${{ github.actor }} is running a terraform plan 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     types: [closed]
 
 jobs:
