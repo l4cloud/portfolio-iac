@@ -19,3 +19,8 @@ resource "aws_s3_bucket_website_configuration" "portfolio_website" {
     key = "error.html"
   }
 }
+
+resource "aws_s3_account_public_access_block" "s3_access_block" {
+  block_public_acls   = false
+  block_public_policy = false
+}
