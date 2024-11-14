@@ -24,3 +24,19 @@ resource "aws_s3_account_public_access_block" "s3_access_block" {
   block_public_acls   = false
   block_public_policy = false
 }
+
+resource "aws_s3_bucket_policy" "portfolio_policy" {
+  bucket = aws_s3_bucket.portfolio.id
+  policy = data.aws_iam_policy_document.allow_get_object.json
+}
+
+data "aws_iam_policy_document" "allow_get_object" {
+  statement {
+    actions = [
+      "s3:GetObject",
+    ]
+    resources = [
+      aws_s3_bucket.portfolio.arn,
+    ] 
+  }
+}
