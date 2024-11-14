@@ -48,7 +48,7 @@ resource "aws_s3_bucket_policy" "portfolio_policy" {
   policy = data.aws_iam_policy_document.allow_get_object.json
 
   depends_on = [
-    aws_s3_account_public_access_block.s3_access_block,
+    aws_s3_bucket_public_access_block.s3_access_block,
   ]
 }
 
