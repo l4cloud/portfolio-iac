@@ -1,8 +1,21 @@
-resource "aws_s3_bucket" "test" {
-  bucket = "l4-cloud-test-bucket"
+resource "aws_s3_bucket" "portfolio" {
+  bucket = "l4-portfolio-bucket"
+  force_destroy = true
 
   tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
+    Name        = "Portfolio"
+    Environment = "Prod"
+  }
+}
+
+resource "aws_s3_bucket_website_configuration" "portfolio_website" {
+  bucket = aws_s3_bucket.l4-portfolio-bucket.id
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "error.html"
   }
 }
