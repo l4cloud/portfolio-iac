@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "portfolio" {
-  bucket        = "l4-portfolio-bucket"
+  bucket        = locals.bucket_name 
   force_destroy = true
 
   tags = {
