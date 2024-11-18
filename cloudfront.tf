@@ -10,6 +10,7 @@ resource "aws_cloudfront_distribution" "s3_disribution" {
     origin_id                = local.s3_origin_id
   }
 
+  aliases             = ["l4-dev.com"]
   enabled             = true
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
@@ -40,8 +41,15 @@ resource "aws_cloudfront_distribution" "s3_disribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    cloudfront_default_certificate = false
+    ssl_support_method             = "sni-only"
+    acm_certificate_arn            = aws_acm_certificate.cert.arn
   }
+
+  depends_on = [
+    aws_acm_certificate_validation.l4_cert_validate
+  ]
+
 }
 
 resource "aws_cloudfront_origin_access_control" "default" {
