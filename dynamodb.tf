@@ -11,10 +11,6 @@ resource "aws_dynamodb_table" "visitors" {
   }
 
   replica {
-    region_name = "eu-west-1"
-  }
-
-  replica {
-    region_name = "eu-west-1"
+    region_name = "eu-west-2"
   }
 }
