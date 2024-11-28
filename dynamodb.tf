@@ -5,6 +5,11 @@ resource "aws_dynamodb_table" "visitors" {
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
 
+  attribute {
+    name = "visitors_table_hash_key"
+    type = "S"
+  }
+
   replica {
     region_name = "eu-west-1"
   }
