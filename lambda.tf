@@ -1,10 +1,10 @@
 resource "aws_lambda_function" "increment_lambda" {
-  filename      = "lambda_function_payload.zip"
+  filename      = "increment_payload.zip"
   function_name = "increment"
-  handler       = "script.lambda_handler"
+  handler       = "increment.lambda_handler"
   role          = aws_iam_role.iam_for_lambda.arn
 
-  source_code_hash = data.archive_file.lambda.output_base64sha256
+  source_code_hash = data.archive_file.increment.output_base64sha256
 
   runtime = "python3.12"
 
@@ -13,6 +13,35 @@ resource "aws_lambda_function" "increment_lambda" {
       name = "Increment view count"
     }
   }
+}
+
+data "archive_file" "increment" {
+  type        = "zip"
+  source_file = "increment.py"
+  output_path = "increment_payload.zip"
+}
+
+resource "aws_lambda_function" "get_count_lambda" {
+  filename      = "get_count.zip"
+  function_name = "get_count"
+  handler       = "get_count.lambda_handler"
+  role          = aws_iam_role.iam_for_lambda.arn
+
+  source_code_hash = data.archive_file.get_count.output_base64sha256
+
+  runtime = "python3.12"
+
+  environment {
+    variables = {
+      name = "Increment view count"
+    }
+  }
+}
+
+data "archive_file" "get_count" {
+  type        = "zip"
+  source_file = "get_count.py"
+  output_path = "get_count.zip"
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -39,6 +68,7 @@ resource "aws_iam_policy" "lamdba_policy" {
         Action = [
           "dynamodb:UpdateItem",
           "dynamodb:PutItem",
+          "dynamodb:GetItem",
         ]
         Effect   = "Allow"
         Resource = "*"
@@ -57,8 +87,4 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
   policy_arn = aws_iam_policy.lamdba_policy.arn
 }
 
-data "archive_file" "lambda" {
-  type        = "zip"
-  source_file = "script.py"
-  output_path = "lambda_function_payload.zip"
-}
+
