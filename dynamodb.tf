@@ -15,8 +15,6 @@ resource "aws_dynamodb_table" "visitors" {
   }
 }
 
-
-
 resource "aws_dynamodb_table" "example" {
   name           = "example-name"
   read_capacity  = 10
@@ -28,3 +26,7 @@ resource "aws_dynamodb_table" "example" {
     type = "S"
   }
 }
+
+
+
+

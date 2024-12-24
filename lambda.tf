@@ -21,28 +21,6 @@ data "archive_file" "increment" {
   output_path = "increment_payload.zip"
 }
 
-resource "aws_lambda_function" "get_count_lambda" {
-  filename      = "get_count.zip"
-  function_name = "get_count"
-  handler       = "get_count.lambda_handler"
-  role          = aws_iam_role.iam_for_lambda.arn
-
-  source_code_hash = data.archive_file.get_count.output_base64sha256
-
-  runtime = "python3.12"
-
-  environment {
-    variables = {
-      name = "Increment view count"
-    }
-  }
-}
-
-data "archive_file" "get_count" {
-  type        = "zip"
-  source_file = "get_count.py"
-  output_path = "get_count.zip"
-}
 
 data "aws_iam_policy_document" "assume_role" {
   statement {

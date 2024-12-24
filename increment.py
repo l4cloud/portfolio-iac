@@ -14,13 +14,11 @@ def lambda_handler(event, context):
             ExpressionAttributeValues={':val': 1},
             ReturnValues="UPDATED_NEW"
         )
-        return { 
-            'statusCode': 200, 'body': "Updated count" 
-        }
+        return response["Attributes"]["count"]
+        
     except Exception as e:
         return {
-            'statusCode': 500, 
-            'body': json.dumps({'error': str(e)})
+            print(json.dumps({'error': str(e)}))
         }
         
 
